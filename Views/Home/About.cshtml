@@ -1,0 +1,110 @@
+@model FastFoodWeb.Models.AboutViewModel
+@{
+    ViewData["Title"] = "About Us";
+}
+
+<div class="about-section">
+    <div class="row align-items-center mb-5">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <h1 class="section-title">Our Story</h1>
+            <p>Founded in 2010, Fast Food started as a small family-owned restaurant with a simple mission: to serve delicious, high-quality food using the freshest ingredients, all delivered quickly to our customers.</p>
+            <p>What began as a single location has now grown into multiple restaurants across the city, but our commitment to quality and service remains unchanged. We believe that fast food doesn't have to compromise on taste or nutrition.</p>
+            <p>Every day, our team works hard to source the finest ingredients, prepare meals with care, and deliver them promptly to your doorstep or serve them in our welcoming restaurants.</p>
+        </div>
+        <div class="col-lg-6">
+            <div class="about-image">
+                <img src="https://awrestaurants.com/_next/static/chunks/images/img-store.3840.jpg" alt="Our Restaurant" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="about-section">
+    <h2 class="section-title">Our Values</h2>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-leaf fa-3x text-primary"></i>
+                    </div>
+                    <h3 class="card-title text-center">Quality</h3>
+                    <p class="card-text">We never compromise on the quality of our ingredients. We source locally whenever possible and ensure everything is fresh and of the highest standard.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-clock fa-3x text-primary"></i>
+                    </div>
+                    <h3 class="card-title text-center">Speed</h3>
+                    <p class="card-text">We understand the value of your time. That's why we've optimized our processes to deliver your food quickly without sacrificing quality.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-heart fa-3x text-primary"></i>
+                    </div>
+                    <h3 class="card-title text-center">Service</h3>
+                    <p class="card-text">Customer satisfaction is at the heart of everything we do. We strive to provide a pleasant experience with every order and visit.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="about-section">
+    <h2 class="section-title">Meet Our Team</h2>
+    <div class="row g-4">
+        @if (Model.TeamMembers.Any())
+        {
+            @foreach (var teamMember in Model.TeamMembers)
+            {
+                <div class="col-md-4">
+                    <div class="team-member">
+                        <div class="team-member-image">
+                            @if (!string.IsNullOrEmpty(teamMember.Photo))
+                            {
+                                <img src="@teamMember.Photo" alt="@teamMember.Name">
+                            }
+                            else
+                            {
+                                <img src="/placeholder.svg?height=150&width=150&query=Professional+portrait" alt="@teamMember.Name">
+                            }
+                        </div>
+                        <h4 class="team-member-name">@teamMember.Name</h4>
+                        <p class="team-member-position">@teamMember.Role</p>
+                        <p>@teamMember.Description</p>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12 text-center">
+                <p>Team information is currently being updated. Please check back soon!</p>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="about-section">
+    <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="about-image">
+                <img src="https://www.diversifiedconstruction.com/wp-content/uploads/2023/04/layout-of-a-commercial-kitchen-is-an-essential-component-to-a-successful-restaurant.jpg" alt="Our Kitchen" class="img-fluid">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h2 class="section-title">Our Kitchen</h2>
+            <p>Our state-of-the-art kitchen is the heart of our operation. It's where our talented chefs work their magic, transforming fresh ingredients into delicious meals.</p>
+            <p>We maintain the highest standards of cleanliness and food safety. Our kitchen is regularly inspected and certified to ensure we meet all health regulations.</p>
+            <p>We've designed our kitchen layout and workflows to maximize efficiency without compromising on quality, allowing us to prepare your food quickly while ensuring it's cooked to perfection.</p>
+        </div>
+    </div>
+</div>

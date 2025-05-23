@@ -1,0 +1,95 @@
+@model FastFoodWeb.Models.ProductDetailsViewModel
+@{
+    ViewData["Title"] = Model.Product.Name;
+}
+
+
+
+<div class="row">
+    <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="product-image">
+            <img src="@Model.Product.ImageUrl" alt="@Model.Product.Name" class="img-fluid rounded">
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="product-info">
+            <h1 class="mb-3">@Model.Product.Name</h1>
+            <div class="product-price mb-3">$@Model.Product.Price.ToString("0.00")</div>
+            <p class="mb-4">@Model.Product.Description</p>
+
+            @if (Model.Product.IsAvailable)
+            {
+                <div class="mb-3">
+                    <span class="badge bg-success">Available</span>
+                </div>
+            }
+            else
+            {
+                <div class="mb-3">
+                    <span class="badge bg-danger">Out of Stock</span>
+                </div>
+            }
+
+            <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                <input type="hidden" name="ProductId" value="@Model.Product.Id" />
+                <div class="quantity-selector">
+                    <button type="button" class="quantity-btn" onclick="decrementQuantity()">-</button>
+                    <input type="number" id="quantity" name="Quantity" class="quantity-input" value="1" min="1" max="10">
+                    <button type="button" class="quantity-btn" onclick="incrementQuantity()">+</button>
+                </div>
+                <button type="submit" class="btn btn-primary" @(Model.Product.IsAvailable ? "" : "disabled")>
+                    <i class="fas fa-cart-plus me-2"></i> Add to Cart
+                </button>
+            </form>
+
+            <div class="mt-4 pt-4 border-top">
+                <h4>Category</h4>
+                <p>@Model.Product.Category</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.RelatedProducts.Any())
+{
+    <div class="mt-5">
+        <h3 class="mb-4">You might also like</h3>
+        <div class="product-grid">
+            @foreach (var relatedProduct in Model.RelatedProducts)
+            {
+                <div class="card h-100">
+                    <img src="@relatedProduct.ImageUrl" class="card-img-top" alt="@relatedProduct.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@relatedProduct.Name</h5>
+                        <p class="card-text">@relatedProduct.Description</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="product-price">$@relatedProduct.Price.ToString("0.00")</span>
+                            <a asp-controller="Products" asp-action="Details" asp-route-id="@relatedProduct.Id" class="btn btn-sm btn-outline-primary">View</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        function incrementQuantity() {
+            var input = document.getElementById('quantity');
+            var value = parseInt(input.value, 10);
+            value = isNaN(value) ? 1 : value;
+            if (value < 10) {
+                input.value = value + 1;
+            }
+        }
+
+        function decrementQuantity() {
+            var input = document.getElementById('quantity');
+            var value = parseInt(input.value, 10);
+            if (value > 1) {
+                input.value = value - 1;
+            }
+        }
+    </script>
+}

@@ -1,0 +1,111 @@
+@model List<FastFoodWeb.Models.ProductCategoryViewModel>
+@{
+    ViewData["Title"] = "Home";
+}
+
+
+
+<section class="mb-5">
+    <h2 class="mb-4">Categories</h2>
+    <div class="row g-4">
+        @foreach (var category in Model)
+        {
+            <div class="col-md-4 col-sm-6">
+                <a asp-controller="Products" asp-action="Category" asp-route-id="@category.Category" class="text-decoration-none">
+                    <div class="card h-100">
+                        @if (category.Products.Any())
+                        {
+                            <img src="@category.Products.First().ImageUrl" class="card-img-top" alt="@category.Category">
+                        }
+                        <div class="card-body text-center">
+                            <h5 class="card-title">@category.Category</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</section>
+
+<section class="mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Popular Items</h2>
+        <a asp-controller="Products" asp-action="Index" class="btn btn-outline-primary">View All</a>
+    </div>
+    
+    <div class="product-grid">
+        @foreach (var category in Model)
+        {
+            @foreach (var product in category.Products.Take(2))
+            {
+                <div class="card h-100">
+                    <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text text-truncate">@product.Description</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="product-price">$@product.Price.ToString("0.00")</span>
+                            <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary">View</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</section>
+
+<section class="mb-5">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="me-4">
+                            <i class="fas fa-truck fa-2x text-primary"></i>
+                        </div>
+                        <div>
+                            <h3>Fast Delivery</h3>
+                            <p class="mb-0">We deliver your food hot and fresh within 30 minutes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="me-4">
+                            <i class="fas fa-leaf fa-2x text-primary"></i>
+                        </div>
+                        <div>
+                            <h3>Quality Ingredients</h3>
+                            <p class="mb-0">We use only the freshest ingredients to prepare your meals</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="card bg-primary text-white">
+        <div class="card-body p-4">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mb-3 mb-lg-0">
+                    <h3 class="mb-2">Download Our Mobile App</h3>
+                    <p class="mb-0">Get exclusive deals and faster ordering with our mobile app</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="#" class="btn btn-light me-2 mb-2 mb-md-0">
+                        <i class="fab fa-apple me-2"></i> App Store
+                    </a>
+                    <a href="#" class="btn btn-light">
+                        <i class="fab fa-google-play me-2"></i> Google Play
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

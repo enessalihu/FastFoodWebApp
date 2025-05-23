@@ -1,0 +1,59 @@
+@model List<FastFoodWeb.Models.ProductViewModel>
+@{
+    ViewData["Title"] = ViewBag.Category;
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h1 class="display-4 fw-bold">@ViewBag.Category</h1>
+            <p class="lead">Explore our delicious @ViewBag.Category options</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex flex-wrap justify-content-center">
+                <a asp-action="Index" class="btn btn-outline-primary m-1">All</a>
+                @{
+                    var categories = Model.Select(p => p.Category).Distinct().ToList();
+                    foreach (var category in categories)
+                    {
+                        <a asp-action="Category" asp-route-id="@category" 
+                           class="btn @(category == ViewBag.Category ? "btn-primary" : "btn-outline-primary") m-1">
+                            @category
+                        </a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="@product.ImageUrl" class="card-img-top" alt="@product.Name" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">@product.Description</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-primary fw-bold">$@product.Price.ToString("0.00")</span>
+                            <div>
+                                <a asp-action="Details" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                                <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-inline">
+                                    <input type="hidden" name="ProductId" value="@product.Id" />
+                                    <input type="hidden" name="Quantity" value="1" />
+                                    <button type="submit" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-cart-plus"></i> Add to Cart
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,178 @@
+@model FastFoodWeb.Models.ContactViewModel
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<div class="row mb-5">
+    <div class="col-lg-6 mb-4 mb-lg-0">
+        <h1 class="section-title">Get In Touch</h1>
+        <p class="mb-4">We'd love to hear from you! Whether you have a question about our menu, delivery service, or anything else, our team is ready to assist you.</p>
+        
+        @if (Model.PrimaryRestaurant != null)
+        {
+            <div class="contact-info">
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-1">Our Location</h5>
+                        <p>@Model.PrimaryRestaurant.Location</p>
+                    </div>
+                </div>
+                
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-1">Phone Number</h5>
+                        <p>@Model.PrimaryRestaurant.PhoneNumber</p>
+                    </div>
+                </div>
+                
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-1">Email Address</h5>
+                        <p>@Model.PrimaryRestaurant.EmailAddress</p>
+                    </div>
+                </div>
+                
+                <div class="contact-info-item">
+                    <div class="contact-info-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-1">Opening Hours</h5>
+                        <p>@Model.PrimaryRestaurant.OpeningHours</p>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <p>Contact information is currently being updated. Please check back soon!</p>
+            </div>
+        }
+    </div>
+    
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title mb-4">Send Us a Message</h3>
+                <form class="contact-form">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Your Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="subject" class="form-label">Subject</label>
+                        <input type="text" class="form-control" id="subject" placeholder="Enter subject">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" id="message" rows="5" placeholder="Enter your message"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Restaurants.Count > 0)
+{
+    <div class="mb-5">
+        <h2 class="section-title">Our Locations</h2>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215266754809!2d-73.98784492426285!3d40.75797623440235!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1684956547279!5m2!1sen!2sus" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+
+    @if (Model.Restaurants.Count > 1)
+    {
+        <div class="mb-5">
+            <h2 class="section-title">All Restaurants</h2>
+            <div class="row g-4">
+                @foreach (var restaurant in Model.Restaurants)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 class="card-title">@(restaurant.Location.Split(',').FirstOrDefault())</h4>
+                                <p><i class="fas fa-map-marker-alt me-2 text-primary"></i> @restaurant.Location</p>
+                                <p><i class="fas fa-phone-alt me-2 text-primary"></i> @restaurant.PhoneNumber</p>
+                                <p><i class="fas fa-envelope me-2 text-primary"></i> @restaurant.EmailAddress</p>
+                                <p><i class="fas fa-clock me-2 text-primary"></i> @restaurant.OpeningHours</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-utensils fa-3x text-primary mb-3"></i>
+                <h3 class="card-title">Dine In</h3>
+                <p class="card-text">Visit our restaurant and enjoy your meal in our comfortable dining area.</p>
+                <a href="#" class="btn btn-outline-primary">View Menu</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-shopping-bag fa-3x text-primary mb-3"></i>
+                <h3 class="card-title">Takeaway</h3>
+                <p class="card-text">Order ahead and pick up your meal at your convenience.</p>
+                <a href="#" class="btn btn-outline-primary">Order Now</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-truck fa-3x text-primary mb-3"></i>
+                <h3 class="card-title">Delivery</h3>
+                <p class="card-text">Have your favorite meals delivered right to your doorstep.</p>
+                <a href="#" class="btn btn-outline-primary">Order Delivery</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card bg-primary text-white">
+    <div class="card-body p-4">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mb-3 mb-lg-0">
+                <h3 class="mb-2">Join Our Newsletter</h3>
+                <p class="mb-0">Subscribe to receive updates, special offers, and more!</p>
+            </div>
+            <div class="col-lg-4">
+                <div class="input-group">
+                    <input type="email" class="form-control" placeholder="Your email address">
+                    <button class="btn btn-light" type="button">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

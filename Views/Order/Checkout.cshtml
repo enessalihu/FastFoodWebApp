@@ -1,0 +1,101 @@
+@model FastFoodWeb.Models.OrderViewModel
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<h1 class="mb-4">Checkout</h1>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4 class="mb-4">Delivery Information</h4>
+                <form asp-action="Checkout" method="post" class="checkout-form">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="tel" class="form-control" id="phone" name="ContactPhone" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address" class="form-label">Delivery Address</label>
+                        <input type="text" class="form-control" id="address" name="DeliveryAddress" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="notes" class="form-label">Delivery Notes (Optional)</label>
+                        <textarea class="form-control" id="notes" rows="3"></textarea>
+                    </div>
+
+                    <h4 class="mb-3">Payment Method</h4>
+                    <div class="mb-4">
+                        <div class="form-check mb-2">
+                            <input id="credit" name="PaymentMethod" type="radio" class="form-check-input" value="credit" checked required>
+                            <label class="form-check-label" for="credit">Credit Card</label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input id="debit" name="PaymentMethod" type="radio" class="form-check-input" value="debit" required>
+                            <label class="form-check-label" for="debit">Debit Card</label>
+                        </div>
+                        <div class="form-check">
+                            <input id="cash" name="PaymentMethod" type="radio" class="form-check-input" value="cash" required>
+                            <label class="form-check-label" for="cash">Cash on Delivery</label>
+                        </div>
+                    </div>
+
+                    <div id="cardPaymentDetails">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-name" class="form-label">Name on card</label>
+                                <input type="text" class="form-control" id="cc-name">
+                                <small class="text-muted">Full name as displayed on card</small>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-number" class="form-label">Card number</label>
+                                <input type="text" class="form-control" id="cc-number">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-expiration" class="form-label">Expiration</label>
+                                <input type="text" class="form-control" id="cc-expiration">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cc-cvv" class="form-label">CVV</label>
+                                <input type="text" class="form-control" id="cc-cvv">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary w-100 mt-3" type="submit">Place Order</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('input[name="PaymentMethod"]').forEach(input => {
+            input.addEventListener('change', function() {
+                const cardDetails = document.getElementById('cardPaymentDetails');
+                if (this.value === 'cash') {
+                    cardDetails.style.display = 'none';
+                } else {
+                    cardDetails.style.display = 'block';
+                }
+            });
+        });
+    </script>
+}

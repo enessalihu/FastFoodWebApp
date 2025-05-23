@@ -1,0 +1,26 @@
+@model FastFoodWeb.Models.OrderViewModel
+@{
+    ViewData["Title"] = "Order Confirmation";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="confirmation-card">
+            <i class="fas fa-check-circle confirmation-icon"></i>
+            <h1 class="mb-4">Thank You!</h1>
+            <p class="lead mb-4">Your order has been placed successfully.</p>
+            <div class="alert alert-info mb-4">
+                <p class="mb-0">Order #@Model.Id</p>
+            </div>
+            <p>We've sent a confirmation email with your order details.</p>
+            <div class="d-flex justify-content-center mt-4">
+                <a asp-controller="Order" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary me-2">
+                    View Order Details
+                </a>
+                <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary">
+                    Return to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
